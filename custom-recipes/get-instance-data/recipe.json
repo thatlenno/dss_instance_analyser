@@ -21,7 +21,7 @@
 
     "outputRoles": [
         {
-            "name": "main_output",
+            "name": "instance_data",
             "label": "Instance data",
             "description": "Per-project stats computed from the Dataiku API",
             "arity": "UNARY",
