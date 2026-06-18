@@ -249,7 +249,7 @@ for project_key in client.list_project_keys():
 instance_data_df = pd.DataFrame(rows)
 
 # Write recipe outputs: write to whatever dataset the user connected to the
-# "main_output" role in the recipe's I/O tab (Code 6 pattern, output side).
-output_names = get_output_names_for_role("main_output")
+# "instance_data" role in the recipe's I/O tab (Code 6 pattern, output side).
+output_names = get_output_names_for_role("instance_data")
 instance_data = dataiku.Dataset(output_names[0])
 instance_data.write_with_schema(instance_data_df)
