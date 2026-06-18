@@ -303,5 +303,5 @@ instance_data_df
 
 # -------------------------------------------------------------------------------- NOTEBOOK-CELL: CODE
 # Write recipe outputs
-instance_data2 = dataiku.Dataset("instance_data")
+instance_data = dataiku.Dataset("instance_data")
 instance_data2.write_with_schema(instance_data_df)
