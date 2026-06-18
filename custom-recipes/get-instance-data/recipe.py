@@ -27,7 +27,7 @@ input_A_names = get_input_names_for_role('input_A_role')
 input_A_datasets = [dataiku.Dataset(name) for name in input_A_names]
 
 # For outputs, the process is the same:
-output_A_names = get_output_names_for_role('main_output')
+output_A_names = get_output_names_for_role('instance_data')
 output_A_datasets = [dataiku.Dataset(name) for name in output_A_names]
 
 
