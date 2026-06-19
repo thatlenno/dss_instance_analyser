@@ -1,4 +1,133 @@
-// This file is the descriptor for the Dash Web App Template instance-analyser_webapp-template
 {
-    "label": "Short description of instance-analyser_webapp-template"
+    "meta": {
+        "label": "Enterprise Dash Toolbox Template",
+        "description": "A highly parameterized dynamic Dash dashboard framework for cross-project deployment.",
+        "icon": "icon-th-large",
+        "tags": ["dashboard", "dash", "interactive"]
+    },
+    
+    // Crucial for telling Dataiku this is a Dash app mapping to backend.py
+    "type": "DASH", 
+    
+    "params": [
+        {
+            "type": "SEPARATOR",
+            "label": "1. Data Source Selection"
+        },
+        {
+            "name": "input_dataset",
+            "label": "Target Dataset",
+            "type": "DATASET",
+            "mandatory": true,
+            "description": "The dataset that this Dash app will query and visualize.",
+            "canSelectForeign": true
+        },
+        {
+            "name": "target_folder",
+            "label": "Output Managed Folder",
+            "type": "MANAGED_FOLDER",
+            "mandatory": false,
+            "description": "Optional folder where the Dash app can export generated PDFs/CSVs.",
+            "canSelectForeign": false
+        },
+
+        {
+            "type": "SEPARATOR",
+            "label": "2. Dynamic Schema Mapping"
+        },
+        {
+            "name": "dimension_col",
+            "label": "Categorical Grouping Column",
+            "type": "DATASET_COLUMN",
+            "datasetParamName": "input_dataset",
+            "mandatory": true,
+            "description": "Column used for breaking down charts (e.g., Country, Product Category)."
+        },
+        {
+            "name": "metric_cols",
+            "label": "Numerical Aggregation Columns",
+            "type": "DATASET_COLUMNS",
+            "datasetParamName": "input_dataset",
+            "mandatory": false,
+            "description": "Select the continuous variables to run mathematical aggregates over."
+        },
+
+        {
+            "type": "SEPARATOR",
+            "label": "3. UI Layout & Settings"
+        },
+        {
+            "name": "dashboard_title",
+            "label": "Custom Header Title",
+            "type": "STRING",
+            "defaultValue": "Executive Performance Summary",
+            "mandatory": true
+        },
+        {
+            "name": "app_notes",
+            "label": "Footer Markdown/Notes",
+            "type": "TEXTAREA",
+            "defaultValue": "Confidential internal report. Data updates dynamically with the pipeline.",
+            "mandatory": false
+        },
+        {
+            "name": "chart_theme",
+            "label": "Chart Style Theme",
+            "type": "SELECT",
+            "defaultValue": "plotly_dark",
+            "selectChoices": [
+                { "value": "plotly", "label": "Standard Light" },
+                { "value": "plotly_dark", "label": "Corporate Dark Mode" },
+                { "value": "seaborn", "label": "Muted Pastel" }
+            ]
+        },
+        {
+            "name": "multi_filters",
+            "label": "Default Filter States",
+            "type": "MULTISELECT",
+            "selectChoices": [
+                { "value": "active", "label": "Active Users" },
+                { "value": "pending", "label": "Pending Audits" },
+                { "value": "flagged", "label": "High Risk Cases" }
+            ]
+        },
+
+        {
+            "type": "SEPARATOR",
+            "label": "4. Advanced Engine Settings"
+        },
+        {
+            "name": "enable_sampling",
+            "label": "Enable In-Memory Data Sampling",
+            "type": "BOOLEAN",
+            "defaultValue": false,
+            "description": "Turn on if the target dataset is too massive to pull comfortably into Dash memory."
+        },
+        {
+            "name": "sampling_limit",
+            "label": "Max Rows to Load",
+            "type": "INT",
+            "defaultValue": 10000,
+            "mandatory": true,
+            "minI": 1000,
+            "maxI": 500000,
+            "visibilityCondition": "model.enable_sampling",
+            "description": "Enforced only when sampling is enabled above."
+        },
+        {
+            "name": "outlier_threshold",
+            "label": "Outlier Sigma Multiplier",
+            "type": "DOUBLE",
+            "defaultValue": 3.0,
+            "mandatory": false,
+            "visibilityCondition": "model.enable_sampling"
+        },
+        {
+            "name": "dynamic_slots",
+            "label": "Dynamically Generated Filter Options",
+            "type": "SELECT",
+            "getChoicesFromPython": true,
+            "description": "Options are calculated at runtime by an isolated Python script inside the plugin resource folder."
+        }
+    ]
 }
